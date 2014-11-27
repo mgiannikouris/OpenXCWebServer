@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>OpenXC</h1>
+    <p class="lead">This server supports cellular OpenXC loggers.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Devices</h2>
+        <p>
+            Manage OpenXC logging devices configured to communicate with this server and view data they have logged.
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("Index", "Devices")">Manage devices &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Firmware Upgrades</h2>
+        <p>Create firmware upgrade packages to upgrade logging devices over-the-air.</p>
+        <p><a class="btn btn-default" href="@Url.Action("Index", "Upgrades")">Manage upgrades &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Users</h2>
+        <p>Manage website users.</p>
+        <p><a class="btn btn-default" href="@Url.Action("Index", "Users")">Manage users &raquo;</a></p>
+    </div>
+</div>
