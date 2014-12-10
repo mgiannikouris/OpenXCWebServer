@@ -15,7 +15,7 @@ $RECYCLE.BIN/
 *.msp
 
 #SVN
-.svn
+.svn/
 
 # =========================
 # Operating System Files

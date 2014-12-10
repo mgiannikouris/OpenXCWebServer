@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<repositories>
-  <repository path="..\OpenXC.Data\packages.config" />
-  <repository path="..\OpenXC.Services\packages.config" />
-  <repository path="..\OpenXC.Web\packages.config" />
-</repositories>
