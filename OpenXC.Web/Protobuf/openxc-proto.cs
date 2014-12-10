@@ -63,6 +63,14 @@ namespace openxc
       get { return _command_response; }
       set { _command_response = value; }
     }
+    private uint _uptime = default(uint);
+    [global::ProtoBuf.ProtoMember(7, IsRequired = false, Name=@"uptime", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint uptime
+    {
+      get { return _uptime; }
+      set { _uptime = value; }
+    }
     [global::ProtoBuf.ProtoContract(Name=@"Type")]
     public enum Type
     {
@@ -194,6 +202,14 @@ namespace openxc
       get { return _predefined_obd2_requests_command; }
       set { _predefined_obd2_requests_command = value; }
     }
+    private openxc.ModemConfigurationCommand _modem_configuration_command = null;
+    [global::ProtoBuf.ProtoMember(7, IsRequired = false, Name=@"modem_configuration_command", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public openxc.ModemConfigurationCommand modem_configuration_command
+    {
+      get { return _modem_configuration_command; }
+      set { _modem_configuration_command = value; }
+    }
     [global::ProtoBuf.ProtoContract(Name=@"Type")]
     public enum Type
     {
@@ -217,7 +233,10 @@ namespace openxc
       PAYLOAD_FORMAT = 6,
             
       [global::ProtoBuf.ProtoEnum(Name=@"PREDEFINED_OBD2_REQUESTS", Value=7)]
-      PREDEFINED_OBD2_REQUESTS = 7
+      PREDEFINED_OBD2_REQUESTS = 7,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"MODEM_CONFIGURATION", Value=8)]
+      MODEM_CONFIGURATION = 8
     }
   
     private global::ProtoBuf.IExtension extensionObject;
@@ -355,6 +374,175 @@ namespace openxc
     {
       get { return _enabled; }
       set { _enabled = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"NetworkOperatorSettings")]
+  public partial class NetworkOperatorSettings : global::ProtoBuf.IExtensible
+  {
+    public NetworkOperatorSettings() {}
+    
+    private bool _allowDataRoaming = default(bool);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"allowDataRoaming", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(default(bool))]
+    public bool allowDataRoaming
+    {
+      get { return _allowDataRoaming; }
+      set { _allowDataRoaming = value; }
+    }
+    private openxc.NetworkOperatorSettings.OperatorSelectMode _operatorSelectMode = openxc.NetworkOperatorSettings.OperatorSelectMode.AUTOMATIC;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"operatorSelectMode", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(openxc.NetworkOperatorSettings.OperatorSelectMode.AUTOMATIC)]
+    public openxc.NetworkOperatorSettings.OperatorSelectMode operatorSelectMode
+    {
+      get { return _operatorSelectMode; }
+      set { _operatorSelectMode = value; }
+    }
+    private openxc.NetworkOperatorSettings.NetworkDescriptor _networkDescriptor = null;
+    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"networkDescriptor", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public openxc.NetworkOperatorSettings.NetworkDescriptor networkDescriptor
+    {
+      get { return _networkDescriptor; }
+      set { _networkDescriptor = value; }
+    }
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"NetworkDescriptor")]
+  public partial class NetworkDescriptor : global::ProtoBuf.IExtensible
+  {
+    public NetworkDescriptor() {}
+    
+    private uint _PLMN = default(uint);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"PLMN", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint PLMN
+    {
+      get { return _PLMN; }
+      set { _PLMN = value; }
+    }
+    private openxc.NetworkOperatorSettings.NetworkDescriptor.NetworkType _networkType = openxc.NetworkOperatorSettings.NetworkDescriptor.NetworkType.GSM;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"networkType", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(openxc.NetworkOperatorSettings.NetworkDescriptor.NetworkType.GSM)]
+    public openxc.NetworkOperatorSettings.NetworkDescriptor.NetworkType networkType
+    {
+      get { return _networkType; }
+      set { _networkType = value; }
+    }
+    [global::ProtoBuf.ProtoContract(Name=@"NetworkType")]
+    public enum NetworkType
+    {
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"GSM", Value=0)]
+      GSM = 0,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"UTRAN", Value=2)]
+      UTRAN = 2
+    }
+  
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+    [global::ProtoBuf.ProtoContract(Name=@"OperatorSelectMode")]
+    public enum OperatorSelectMode
+    {
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"AUTOMATIC", Value=0)]
+      AUTOMATIC = 0,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"MANUAL", Value=1)]
+      MANUAL = 1,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"DEREGISTER", Value=2)]
+      DEREGISTER = 2,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"SET_ONLY", Value=3)]
+      SET_ONLY = 3,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"MANUAL_AUTOMATIC", Value=4)]
+      MANUAL_AUTOMATIC = 4
+    }
+  
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"NetworkDataSettings")]
+  public partial class NetworkDataSettings : global::ProtoBuf.IExtensible
+  {
+    public NetworkDataSettings() {}
+    
+    private string _APN = "";
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"APN", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue("")]
+    public string APN
+    {
+      get { return _APN; }
+      set { _APN = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"ServerConnectSettings")]
+  public partial class ServerConnectSettings : global::ProtoBuf.IExtensible
+  {
+    public ServerConnectSettings() {}
+    
+    private string _host = "";
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"host", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue("")]
+    public string host
+    {
+      get { return _host; }
+      set { _host = value; }
+    }
+    private uint _port = default(uint);
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"port", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(uint))]
+    public uint port
+    {
+      get { return _port; }
+      set { _port = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"ModemConfigurationCommand")]
+  public partial class ModemConfigurationCommand : global::ProtoBuf.IExtensible
+  {
+    public ModemConfigurationCommand() {}
+    
+    private openxc.NetworkOperatorSettings _networkOperatorSettings = null;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"networkOperatorSettings", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public openxc.NetworkOperatorSettings networkOperatorSettings
+    {
+      get { return _networkOperatorSettings; }
+      set { _networkOperatorSettings = value; }
+    }
+    private openxc.NetworkDataSettings _networkDataSettings = null;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"networkDataSettings", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public openxc.NetworkDataSettings networkDataSettings
+    {
+      get { return _networkDataSettings; }
+      set { _networkDataSettings = value; }
+    }
+    private openxc.ServerConnectSettings _serverConnectSettings = null;
+    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"serverConnectSettings", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public openxc.ServerConnectSettings serverConnectSettings
+    {
+      get { return _serverConnectSettings; }
+      set { _serverConnectSettings = value; }
     }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)

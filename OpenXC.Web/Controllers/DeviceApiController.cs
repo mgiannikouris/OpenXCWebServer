@@ -85,11 +85,29 @@ namespace OpenXC.Web.Controllers
             {
                 try
                 {
-                    var valid = JContainer.Parse(configuration);
+                    // Parse out the JSON and add null characters after each command to satisfy the command parser.
+                    var parsedJson = JContainer.Parse(configuration);
+                    StringBuilder sb = new StringBuilder();
+                    if (parsedJson is JObject)
+                    {
+                        // Single object.
+                        sb.Append(parsedJson.ToString(Formatting.None));
+                        sb.Append('\0');
+                    }
+                    else if (parsedJson is JArray)
+                    {
+                        // Multiple objects.
+                        foreach (var command in parsedJson)
+                        {
+                            sb.Append(command.ToString(Formatting.None));
+                            sb.Append('\0');
+                        }
+                    }
+
                     return new HttpResponseMessage
                     {
                         StatusCode = HttpStatusCode.OK,
-                        Content = new StringContent(configuration, Encoding.UTF8, "application/json")
+                        Content = new StringContent(sb.ToString(), Encoding.ASCII, "application/json")
                     };
                 }
                 catch (Exception e)
@@ -99,7 +117,7 @@ namespace OpenXC.Web.Controllers
                 return new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(configuration, Encoding.UTF8, "text/plain")
+                    Content = new StringContent(configuration, Encoding.ASCII, "text/plain")
                 };
             }
             else
