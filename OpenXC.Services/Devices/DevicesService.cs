@@ -46,6 +46,7 @@ namespace OpenXC.Services.Devices
                     {
                         Id = dbLoggingDevice.Id,
                         DeviceName = dbLoggingDevice.DeviceName,
+                        FriendlyName = dbLoggingDevice.FriendlyName,
                         FirmwareId = dbLoggingDevice.FirmwareId,
                         FirmwareUpgradeName = dbLoggingDevice.FirmwareUpgrade.Name,
                         FirmwareUpgradeAttempts = dbLoggingDevice.FirmwareUpgradeAttempts,
@@ -74,11 +75,12 @@ namespace OpenXC.Services.Devices
             return loggingDevice;
         }
 
-        public async Task<LoggingDevice> RegisterLoggingDevice(string deviceName)
+        public async Task<LoggingDevice> RegisterLoggingDevice(string deviceId, string deviceName)
         {
             LoggingDevice newDevice = new LoggingDevice
             {
-                DeviceName = deviceName
+                DeviceName = deviceId,
+                FriendlyName = deviceName
             };
             try
             {

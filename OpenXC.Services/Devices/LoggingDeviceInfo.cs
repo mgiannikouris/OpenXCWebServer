@@ -22,6 +22,11 @@ namespace OpenXC.Services.Devices
         public string DeviceName { get; set; }
 
         /// <summary>
+        /// The user-friendly devce name.
+        /// </summary>
+        public string FriendlyName { get; set; }
+
+        /// <summary>
         /// Identifier for the firmware on the device.
         /// </summary>
         public string FirmwareId { get; set; }

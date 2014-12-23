@@ -80,6 +80,10 @@ namespace OpenXC.Data.DB
                 .HasMaxLength(64)
                 .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute() { IsUnique = true }));
             modelBuilder.Entity<LoggingDevice>()
+                .Property(dbLoggingDevice => dbLoggingDevice.FriendlyName)
+                .IsRequired()
+                .HasMaxLength(64);
+            modelBuilder.Entity<LoggingDevice>()
                 .HasOptional(dbLoggingDevice => dbLoggingDevice.FirmwareUpgrade)
                 .WithMany(dbFirmwareUpgrade => dbFirmwareUpgrade.LoggingDevices);
 

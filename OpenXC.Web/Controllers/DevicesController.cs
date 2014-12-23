@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace OpenXC.Web.Controllers
 {
@@ -87,7 +88,7 @@ namespace OpenXC.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                LoggingDevice device = await devicesService.RegisterLoggingDevice(newDevice.DeviceName);
+                LoggingDevice device = await devicesService.RegisterLoggingDevice(newDevice.DeviceName, newDevice.FriendlyName);
                 if (device != null)
                 {
                     return RedirectToAction("Index");
@@ -120,7 +121,6 @@ namespace OpenXC.Web.Controllers
         [Route("{deviceName}/data")]
         public async Task<ActionResult> Data(LoggedDataQueryViewModel vm)
         {
-            
             if (ModelState.IsValid)
             {
                 List<LoggedData> loggedData = await devicesService.GetLoggedData(vm.DeviceName, vm.StartDate, vm.EndDate, MaxLoggedDataEntries + 1);
@@ -130,6 +130,27 @@ namespace OpenXC.Web.Controllers
             }
 
             return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("{deviceName}/downloadcsv")]
+        public async Task<FileContentResult> DownloadCsv(LoggedDataQueryViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                List<LoggedData> loggedData = await devicesService.GetLoggedData(vm.DeviceName, vm.StartDate, vm.EndDate, MaxLoggedDataEntries + 1);
+                string csvResult = string.Empty;
+                foreach (LoggedData data in loggedData)
+                {
+                    string date = data.LoggedTime.ToString();
+                    string json = data.Data;
+                    json = string.Format("\"{0}\"", json.Replace("\"", "\"\""));
+                    csvResult = csvResult + string.Format("{0},{1}{2}", date, json, Environment.NewLine);
+                }
+                return File(new System.Text.UTF8Encoding().GetBytes(csvResult), "text/csv", string.Format("{0}_loggedData.csv", vm.DeviceName));
+            }
+            return null;
         }
 
         [HttpGet]

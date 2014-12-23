@@ -33,6 +33,9 @@
                 @Html.DisplayNameFor(model => model.LoggingDevices.First().DeviceName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.LoggingDevices.First().FriendlyName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.LoggingDevices.First().FirmwareId)
             </th>
             <th>
@@ -61,6 +64,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => Model.LoggingDevices[i].DeviceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.LoggingDevices[i].FriendlyName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => Model.LoggingDevices[i].FirmwareId)

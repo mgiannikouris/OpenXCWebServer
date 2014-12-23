@@ -22,6 +22,11 @@ namespace OpenXC.Data.Models
         public string DeviceName { get; set; }
 
         /// <summary>
+        /// The friendly name to display for the device
+        /// </summary>
+        public string FriendlyName { get; set; }
+
+        /// <summary>
         /// Identifier for the firmware on the device.
         /// </summary>
         public string FirmwareId { get; set; }

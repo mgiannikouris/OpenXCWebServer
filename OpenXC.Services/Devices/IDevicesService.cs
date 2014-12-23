@@ -30,9 +30,10 @@ namespace OpenXC.Services.Devices
         /// <summary>
         /// Register a new logging device.
         /// </summary>
+        /// <param name="deviceId">The device's Id.</param>
         /// <param name="deviceName">The device's name.</param>
         /// <returns>The created logging device.</returns>
-        Task<LoggingDevice> RegisterLoggingDevice(string deviceName);
+        Task<LoggingDevice> RegisterLoggingDevice(string deviceId, string deviceName);
 
         /// <summary>
         /// Delete a logging device.

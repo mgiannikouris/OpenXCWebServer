@@ -30,7 +30,7 @@ namespace OpenXC.Services.Upgrades
         }
 
         /// <summary>
-        /// List of firmware upgrades.
+        /// List of firmware upgrade infos.
         /// </summary>
         private IQueryable<FirmwareUpgradeInfo> FirmwareUpgradeInfoList
         {
@@ -43,6 +43,17 @@ namespace OpenXC.Services.Upgrades
                         Name = dbUpgrade.Name,
                         FileHash = dbUpgrade.FileHash
                     });
+            }
+        }
+
+        /// <summary>
+        /// List of Firmware upgrades
+        /// </summary>
+        private IQueryable<FirmwareUpgrade> FirmwareUpgradeList
+        {
+            get
+            {
+                return db.FirmwareUpgrades;
             }
         }
 
@@ -77,6 +88,20 @@ namespace OpenXC.Services.Upgrades
                 return null;
             }
             return upgrade;
+        }
+
+        public async Task<FirmwareUpgrade> GetFirmwareUpgradeFile(int upgradeId)
+        {
+            FirmwareUpgrade firmwareUpgrade = await FirmwareUpgradeList
+                .SingleOrDefaultAsync(upgrade => upgrade.Id == upgradeId);
+
+            if (firmwareUpgrade == null)
+            {
+                // Can't find the upgrade.
+                throw new UpgradeNotFoundException(upgradeId);
+            }
+
+            return firmwareUpgrade;
         }
 
         public async Task DeleteFirmwareUpgrade(FirmwareUpgrade upgrade)

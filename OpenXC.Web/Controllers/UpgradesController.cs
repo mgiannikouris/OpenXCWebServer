@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using OpenXC.Web.Utilities;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace OpenXC.Web.Controllers
 {
@@ -59,25 +62,14 @@ namespace OpenXC.Web.Controllers
                     upgradeBytes = r.ReadBytes(vm.UploadedFile.ContentLength);
                 }
 
-                // run HEXMOD on the upgrade file (get flash attributes Start, Length, CRC16-CCITT (iReflected, oReflected))
-                HexFileUtility.FlashCRCData flashCRC = HexFileUtility.ProcessHEX(upgradeBytes);
-
                 // Calculate MD5 of the file.
                 string fileMD5 = HexFileUtility.GetMd5Hash(upgradeBytes);
-                if (!String.IsNullOrWhiteSpace(vm.FileHash) && !String.Equals(vm.FileHash, fileMD5, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    // User specified MD5 of the file but it didn't match what the server received.
-                    ModelState.AddModelError(
-                        "FileHash",
-                        String.Format("Uploaded file MD5 ({0}) did not match supplied value.", fileMD5));
-                    return View(vm);
-                }
 
                 FirmwareUpgrade upgrade = new FirmwareUpgrade
                 {
                     Name = vm.Name,
-                    FileHash = flashCRC.flashMD5,
-                    FileData = upgradeBytes.Concat(flashCRC.bytesToAppend).ToArray(),
+                    FileHash = fileMD5,
+                    FileData = upgradeBytes,
                 };
                 upgrade = await upgradesService.CreateFirmwareUpgrade(upgrade);
                 if (upgrade == null)
@@ -88,6 +80,22 @@ namespace OpenXC.Web.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Route("{id}/download")]
+        public async Task<ActionResult> DownloadFirmwareFile(int id)
+        {
+            FirmwareUpgrade upgrade = await upgradesService.GetFirmwareUpgradeFile(id);
+            
+            if (upgrade != null)
+            {
+                return File(upgrade.FileData, "application/octet-stream", string.Format("{0}_upgradeFile.hex", upgrade.Name));
+            }
+            else
+            {
+                return null;
+            }
         }
 
         [HttpGet]
@@ -109,5 +117,6 @@ namespace OpenXC.Web.Controllers
             await upgradesService.DeleteFirmwareUpgrade(upgrade);
             return RedirectToAction("Index");
         }
+
     }
 }

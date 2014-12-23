@@ -58,6 +58,10 @@
     <Compile Include="Migrations\201411121713474_InitialCreate.Designer.cs">
       <DependentUpon>201411121713474_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412171432464_DeviceFriendlyName.cs" />
+    <Compile Include="Migrations\201412171432464_DeviceFriendlyName.Designer.cs">
+      <DependentUpon>201412171432464_DeviceFriendlyName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\FirmwareUpgrade.cs" />
     <Compile Include="Models\LoggedData.cs" />
@@ -69,6 +73,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201411121713474_InitialCreate.resx">
       <DependentUpon>201411121713474_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412171432464_DeviceFriendlyName.resx">
+      <DependentUpon>201412171432464_DeviceFriendlyName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

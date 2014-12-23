@@ -29,7 +29,8 @@
                 @Html.DisplayFor(modelItem => item.FileHash)
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                @Html.ActionLink("Download", "DownloadFirmwareFile", new { id = item.Id })
             </td>
         </tr>
     }

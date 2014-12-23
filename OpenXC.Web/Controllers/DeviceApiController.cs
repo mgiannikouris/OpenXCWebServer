@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using OpenXC.Web.Utilities;
 
 namespace OpenXC.Web.Controllers
 {
@@ -140,8 +141,11 @@ namespace OpenXC.Web.Controllers
 
             if (upgrade != null)
             {
+                // run HEXMOD on the upgrade file (get flash attributes Start, Length, CRC16-CCITT (iReflected, oReflected))
+                HexFileUtility.FlashCRCData flashCRC = HexFileUtility.ProcessHEX(upgrade.FileData);
+
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
-                response.Content = new ByteArrayContent(upgrade.FileData);
+                response.Content = new ByteArrayContent(upgrade.FileData.Concat(flashCRC.bytesToAppend).ToArray());
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 response.Headers.ETag = new EntityTagHeaderValue(String.Format("\"{0}\"", upgrade.FileHash), false);
                 return response;

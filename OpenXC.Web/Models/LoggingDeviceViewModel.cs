@@ -22,12 +22,20 @@ namespace OpenXC.Web.Models
         public bool Selected { get; set; }
 
         /// <summary>
-        /// The device name (external identifier).
+        /// The device Id (external identifier).
+        /// </summary>
+        [Display(Name = "Device ID")]
+        [Required]
+        [MaxLength(64)]
+        public string DeviceName { get; set; }
+
+        /// <summary>
+        /// The device name
         /// </summary>
         [Display(Name = "Device name")]
         [Required]
         [MaxLength(64)]
-        public string DeviceName { get; set; }
+        public string FriendlyName { get; set; }
 
         /// <summary>
         /// Identifier for the firmware on the device.

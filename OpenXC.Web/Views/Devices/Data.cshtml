@@ -5,7 +5,6 @@
 
 <h2>Data</h2>
 
-
 @using (Html.BeginForm("Data", "Devices", FormMethod.Post, new { @class = "form-inline", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -57,6 +56,17 @@
         }
     </tbody>
 </table>
+@using (Html.BeginForm("DownloadCsv", "Devices", FormMethod.Post, new { @class = "form-inline", role = "form" }))
+{
+    @Html.HiddenFor(model => model.DeviceName)
+    @Html.HiddenFor(model => model.StartDate)
+    @Html.HiddenFor(model => model.EndDate)
+    @Html.AntiForgeryToken()
+    if (Model.LoggedData.Any())
+    {
+        <button type="submit" class="btn btn-primary">Download as .csv</button>
+    }
+}
 
 @section scripts
 {
